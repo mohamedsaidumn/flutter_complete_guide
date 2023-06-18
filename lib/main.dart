@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import './transaction.dart';
 
@@ -16,6 +17,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
+  String titleInput;
+  String amountInput;
   final List<Transaction> transactions = [
     Transaction(
       id: 't1',
@@ -38,7 +41,7 @@ class MyHomePage extends StatelessWidget {
         title: Text('Flutter App'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
@@ -47,6 +50,39 @@ class MyHomePage extends StatelessWidget {
               color: Colors.blue,
               child: Text('CHART!'),
               elevation: 5,
+            ),
+          ),
+          Card(
+            elevation: 5,
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Title'),
+                    onChanged: (val) {
+                      titleInput = val;
+                    },
+                  ),
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Amount'),
+                    onChanged: (val) {
+                      amountInput = val;
+                    },
+                  ),
+                  ElevatedButton(
+                    child: Text(
+                      'Add Transaction',
+                      style: TextStyle(color: Colors.purple),
+                    ),
+                    onPressed: () {
+                      print(titleInput);
+                      print(amountInput);
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
           Column(
@@ -75,21 +111,23 @@ class MyHomePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Column(children: [
-                      Text(
-                        tx.title,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        tx.date.toString(),
-                        style: TextStyle(
-                          color: Colors.grey,
-                        ),
-                      )
-                    ])
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            tx.title,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            DateFormat().add_yMMMd().format(tx.date),
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          )
+                        ])
                   ],
                 ),
               );
